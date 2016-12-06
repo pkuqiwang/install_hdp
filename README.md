@@ -68,11 +68,15 @@ yum -y install ambari-server
 ```
 Copy DDL for Ambari folder to MySQL host and load the DDL on MySQL host
 ```
+--copy DDL from Ambari node to MySQL node
 scp /var/lib/ambari-server/resources/Ambari-DDL-MySQL-CREATE.sql root@mysql_node:/tmp/Ambari-DDL-MySQL-CREATE.sql
+
+--on MySQL node, load DDL to DB
 mysql -u root -p ambari < /tmp/Ambari-DDL-MySQL-CREATE.sql
 ```
 Copy MySQL jdbc JAR to Ambari server
 ```
+--on Ambari node
 mkdir -p /usr/share/java/
 scp root@mysql_node:/usr/share/java/* /usr/share/java/
 ```
@@ -80,5 +84,43 @@ Then run Ambari setup
 ```
 ambari-server setup
 
+OK to continue [y/n] (y)? y
+Customize user account for ambari-server daemon [y/n] (n)? n
+[1] Oracle JDK 1.8 + Java Cryptography Extension (JCE) Policy Files 8
+[2] Oracle JDK 1.7 + Java Cryptography Extension (JCE) Policy Files 7
+[3] Custom JDK
+==============================================================================
+Enter choice (1): 1
+
+Do you accept the Oracle Binary Code License Agreement [y/n] (y)? y
+
+Enter advanced database configuration [y/n] (n)? y
+Configuring database...
+==============================================================================
+Choose one of the following options:
+[1] - PostgreSQL (Embedded)
+[2] - Oracle
+[3] - MySQL / MariaDB
+[4] - PostgreSQL
+[5] - Microsoft SQL Server (Tech Preview)
+[6] - SQL Anywhere
+[7] - BDB
+==============================================================================
+Enter choice (1): 3
+Hostname (localhost): qwang-kdc-ldap.field.hortonworks.com
+Port (3306):
+Database name (ambari):
+Username (ambari):
+Enter Database Password (bigdata):
+Re-enter password:
+
+Proceed with configuring remote database connection properties [y/n] (y)? y
+```
+Load MySQL JDBC driver
+```
 ambari-server setup --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar
+```
+Then start Ambari server. This conclude the installation of Ambari server
+```
+ambari-server start
 ```
