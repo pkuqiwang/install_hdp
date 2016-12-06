@@ -1,7 +1,7 @@
-### Install HDP
+# Install HDP
 This is the second article of series about setup a secured HDP cluster
 
-#Prerequisits
+###Prerequisits
 First make sure root is enabled on all Node.
 ```
 sudo vi /root/.ssh/authorized_keys
@@ -59,7 +59,7 @@ vi /etc/selinux/config
 SELINUX=disabled
 ```
 
-#Install Ambari server
+###Install Ambari server
 You may need to change the repo based on the latest [document.](http://docs.hortonworks.com/index.html) 
 ```
 wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.4.2.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
@@ -124,5 +124,5 @@ Then start Ambari server. This conclude the installation of Ambari server
 ```
 ambari-server start
 ```
-#Install HDP
+###Install HDP
 TBD
