@@ -124,3 +124,5 @@ Then start Ambari server. This conclude the installation of Ambari server
 ```
 ambari-server start
 ```
+#Install HDP
+TBD
